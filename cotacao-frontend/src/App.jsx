@@ -13,9 +13,6 @@ function App() {
   const [valorOrigem, setValorOrigem] = useState('');
   const [valorDestino, setValorDestino] = useState('');
   const [mostrarNotificacao, setMostrarNotificacao] = useState(false);
-  const [mostrarHistorico, setMostrarHistorico] = useState(false);
-  const [historico, setHistorico] = useState([]);
-  const [loadingHistorico, setLoadingHistorico] = useState(false);
 
   // Busca cotação automaticamente quando as moedas mudarem
   useEffect(() => {
@@ -119,29 +116,6 @@ function App() {
     return d.toLocaleString('pt-BR');
   }
 
-  // Função para buscar histórico de cotações
-  async function buscarHistorico() {
-    setLoadingHistorico(true);
-    try {
-      const resp = await fetch(`${API_BASE_URL}/cotacao/historico`);
-      if (!resp.ok) {
-        throw new Error('Erro ao buscar histórico');
-      }
-      const data = await resp.json();
-      setHistorico(data);
-      setMostrarHistorico(true);
-    } catch (err) {
-      console.error(err);
-      alert('Erro ao buscar histórico: ' + err.message);
-    } finally {
-      setLoadingHistorico(false);
-    }
-  }
-
-  function fecharHistorico() {
-    setMostrarHistorico(false);
-  }
-
   return (
     <div className="app-root">
       <div className="card">
@@ -187,14 +161,6 @@ function App() {
               disabled={loading || moedaOrigem === moedaDestino}
             >
               {loading ? 'Buscando...' : 'Buscar cotação'}
-            </button>
-            <button
-              type="button"
-              className="btn-secondary"
-              onClick={buscarHistorico}
-              disabled={loadingHistorico}
-            >
-              {loadingHistorico ? 'Carregando...' : '📜 Histórico'}
             </button>
           </div>
 
@@ -282,39 +248,6 @@ function App() {
             />
           </svg>
           <span>Cotação atualizada com sucesso!</span>
-        </div>
-      )}
-
-      {/* Modal de Histórico */}
-      {mostrarHistorico && (
-        <div className="modal-overlay" onClick={fecharHistorico}>
-          <div className="modal-content" onClick={e => e.stopPropagation()}>
-            <div className="modal-header">
-              <h2>📜 Histórico de Cotações</h2>
-              <button className="modal-close" onClick={fecharHistorico}>
-                ✕
-              </button>
-            </div>
-            <div className="modal-body">
-              {historico.length === 0 ? (
-                <p className="empty-message">Nenhuma cotação no histórico ainda.</p>
-              ) : (
-                <div className="historico-list">
-                  {historico.map((item, index) => (
-                    <div key={index} className="historico-item">
-                      <div className="historico-par">
-                        <strong>{item.moeda_origem} → {item.moeda_destino}</strong>
-                      </div>
-                      <div className="historico-info">
-                        <span className="historico-taxa">{item.taxa_cambio}</span>
-                        <span className="historico-data">{formatarData(item.data_cotacao)}</span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
         </div>
       )}
     </div>
