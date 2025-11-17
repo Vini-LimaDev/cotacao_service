@@ -76,9 +76,7 @@ O projeto segue uma **arquitetura hexagonal (ports and adapters)** no backend:
   - Seleção de moedas de origem e destino
   - Busca automática de cotações
   - Conversão bidirecional de valores
-  - Histórico de cotações em cache
   - Notificações toast de sucesso
-  - Modal com histórico completo
 
 ---
 ## 🚀 Como Executar
@@ -143,23 +141,6 @@ Obtém a cotação entre duas moedas
   "fonte": "cache"
 }
 ```
-
-### `GET /cotacao/historico`
-Retorna todas as cotações armazenadas em cache
-
-**Resposta:**
-```json
-[
-  {
-    "par": "USD->BRL",
-    "moeda_origem": "USD",
-    "moeda_destino": "BRL",
-    "taxa_cambio": 5.25,
-    "data_cotacao": "2025-11-17T10:30:00"
-  }
-]
-```
-
 ## ⚙️ Configuração
 
 As configurações podem ser ajustadas em `app/core/config.py`:
@@ -189,7 +170,6 @@ As configurações podem ser ajustadas em `app/core/config.py`:
 - ✅ CORS configurado para desenvolvimento
 - ✅ Interface responsiva e moderna
 - ✅ Conversão bidirecional de valores
-- ✅ Histórico de cotações consultadas
 - ✅ Notificações de sucesso
 - ✅ Atualização automática ao trocar moedas
 
