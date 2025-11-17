@@ -41,3 +41,22 @@ class CotacaoCache:
         with self._lock:
             self._data[key] = entry
         return entry
+
+    def get_all(self) -> Dict[str, CacheEntry]:
+        """Retorna todas as entradas válidas do cache."""
+        with self._lock:
+            # Remove entradas expiradas e retorna apenas as válidas
+            valid_entries = {}
+            expired_keys = []
+            
+            for key, entry in self._data.items():
+                if self._is_valid(entry):
+                    valid_entries[key] = entry
+                else:
+                    expired_keys.append(key)
+            
+            # Limpa entradas expiradas
+            for key in expired_keys:
+                self._data.pop(key, None)
+            
+            return valid_entries
