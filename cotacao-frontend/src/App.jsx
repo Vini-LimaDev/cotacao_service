@@ -13,6 +13,7 @@ function App() {
   const [valorOrigem, setValorOrigem] = useState('');
   const [valorDestino, setValorDestino] = useState('');
   const [mostrarNotificacao, setMostrarNotificacao] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   // Busca cotação automaticamente quando as moedas mudarem
   useEffect(() => {
@@ -31,6 +32,19 @@ function App() {
       return () => clearTimeout(timer);
     }
   }, [mostrarNotificacao]);
+
+  // Efeito para rastrear o mouse
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, []);
 
   // Função para buscar cotação automaticamente
   async function buscarCotacaoAutomatica() {
@@ -118,6 +132,12 @@ function App() {
 
   return (
     <div className="app-root">
+      <div 
+        className="mouse-gradient"
+        style={{
+          background: `radial-gradient(600px at ${mousePosition.x}px ${mousePosition.y}px, rgba(34, 197, 94, 0.15), transparent 80%)`
+        }}
+      />
       <div className="card">
         <h1 className="title">Cotação de Moedas</h1>
         <p className="subtitle">
