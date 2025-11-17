@@ -1,0 +1,8 @@
+{
+  "python.defaultInterpreterPath": "/home/vinicius_lima/api_cotacao/cotacao_service/.venv/bin/python",
+  "python.analysis.extraPaths": [
+    "/home/vinicius_lima/api_cotacao/cotacao_service"
+  ],
+  "python.linting.enabled": true,
+  "python.analysis.indexing": true
+}

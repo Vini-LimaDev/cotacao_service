@@ -1,11 +1,15 @@
+# app/domain/models.py
 from datetime import datetime
 from typing import Literal
 
 from pydantic import BaseModel
 
+Moeda = Literal["USD", "EUR", "BRL", "JPY"]  # pode ampliar depois
+
+
 class Cotacao(BaseModel):
-    id: int
-    moeda_origem: Literal['USD', 'EUR', 'BRL', 'JPY']
-    moeda_destino: Literal['USD', 'EUR', 'BRL', 'JPY']
+    moeda_origem: Moeda
+    moeda_destino: Moeda
     taxa_cambio: float
     data_cotacao: datetime
+    fonte: Literal["cache", "api_externa"]

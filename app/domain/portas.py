@@ -1,20 +1,24 @@
+# app/domain/ports.py
 from abc import ABC, abstractmethod
 
 from .models import Cotacao
 
+
 class CotacaoProvider(ABC):
     @abstractmethod
-    async def buscar_cotacao(self, moeda: str) -> float:        
+    async def buscar_cotacao(self, moeda_origem: str, moeda_destino: str) -> float:
         """
-        Busca o valor da cotação em alguma fonte externa (API real ou fake).
-        Deve retornar apenas o valor numérico.
+        Busca a taxa de câmbio na API externa.
+        Retorna apenas o valor numérico (taxa_cambio).
         """
         raise NotImplementedError
-    
+
+
 class CotacaoRepository(ABC):
     @abstractmethod
-    async def obter_cotacao(self, moeda: str) -> Cotacao:
+    async def obter_cotacao(self, moeda_origem: str, moeda_destino: str) -> Cotacao:
         """
-        Retorna a cotação da moeda, usando cache quando possível.
+        Retorna a cotação (com origem, destino, taxa, data e fonte),
+        usando cache quando possível.
         """
         raise NotImplementedError
