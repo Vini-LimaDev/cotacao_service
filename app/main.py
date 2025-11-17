@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.cotacao_rotas import router as cotacao_router  # ou cotacao_routes
 
+# Inicializa a aplicação FastAPI
 app = FastAPI(
     title="Serviço de Cotação de Moedas",
     description="Serviço com cache em memória usando Frankfurter API.",
@@ -23,9 +24,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Inclui as rotas de cotação
 app.include_router(cotacao_router)
 
 
 @app.get("/health")
+# Endpoint para verificar a saúde da aplicação
 async def healthcheck():
     return {"status": "ok"}

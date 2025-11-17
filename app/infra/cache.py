@@ -12,6 +12,9 @@ class CacheEntry:
 
 
 class CotacaoCache:
+    """
+    Cache para armazenar cotações com expiração baseada em TTL (Time To Live).
+    """
     def __init__(self, ttl_seconds: int) -> None:
         self._ttl = ttl_seconds
         self._data: Dict[str, CacheEntry] = {}
@@ -25,6 +28,9 @@ class CotacaoCache:
         return agora - entry.atualizado_em <= timedelta(seconds=self._ttl)
 
     def get(self, moeda_origem: str, moeda_destino: str) -> Optional[CacheEntry]:
+        """
+        Recupera uma cotação do cache se válida, caso contrário retorna None.
+        """
         key = self._key(moeda_origem, moeda_destino)
         with self._lock:
             entry = self._data.get(key)
@@ -36,6 +42,9 @@ class CotacaoCache:
             return entry
 
     def set(self, moeda_origem: str, moeda_destino: str, valor: float) -> CacheEntry:
+        """
+        Armazena uma nova cotação no cache.
+        """
         key = self._key(moeda_origem, moeda_destino)
         entry = CacheEntry(valor=valor, atualizado_em=datetime.utcnow())
         with self._lock:

@@ -29,6 +29,10 @@ _repo = CotacaoRepositoryComCache(provider=_provider, cache=_cache)
 
 
 def _validar_moeda(value: str) -> str:
+    """
+    Valida se o código da moeda é composto por 3 letras.
+    Raises HTTPException se inválido.
+    """
     v = value.upper()
     if len(v) != 3 or not v.isalpha():
         raise HTTPException(
@@ -43,6 +47,10 @@ async def obter_cotacao(
     moeda_origem: str = Query(..., description="Moeda de origem, ex: USD"),
     moeda_destino: str = Query(..., description="Moeda de destino, ex: BRL"),
 ):
+    """
+    Obtém a cotação entre duas moedas.
+    Consulta o cache antes de fazer uma chamada externa.
+    """
     origem = _validar_moeda(moeda_origem)
     destino = _validar_moeda(moeda_destino)
 
@@ -59,7 +67,9 @@ async def obter_cotacao(
 
 @router.get("/historico", response_model=List[HistoricoItem])
 async def obter_historico():
-    """Retorna todas as cotações armazenadas em cache."""
+    """
+    Retorna todas as cotações armazenadas em cache.
+    """
     historico = []
     cache_entries = _cache.get_all()
     

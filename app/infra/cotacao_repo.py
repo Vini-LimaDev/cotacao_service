@@ -10,6 +10,10 @@ class CotacaoRepositoryComCache(CotacaoRepository):
         self._cache = cache
 
     async def obter_cotacao(self, moeda_origem: str, moeda_destino: str) -> Cotacao:
+        """
+        Obtém a cotação entre duas moedas.
+        Consulta o cache antes de fazer uma chamada externa.
+        """
         moeda_origem = moeda_origem.upper()
         moeda_destino = moeda_destino.upper()
 

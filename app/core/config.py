@@ -4,6 +4,9 @@ from pydantic import Field
 
 
 class Settings(BaseSettings):
+    """
+    Configurações da aplicação carregadas de variáveis de ambiente.
+    """
     cache_ttl_seconds: int = Field(default=60, description="TTL do cache em segundos")
 
     frankfurter_base_url: str = Field(

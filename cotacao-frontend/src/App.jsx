@@ -35,6 +35,7 @@ function App() {
     }
   }, [mostrarNotificacao]);
 
+  // Função para buscar cotação automaticamente
   async function buscarCotacaoAutomatica() {
     setLoading(true);
     setErro(null);
@@ -74,11 +75,13 @@ function App() {
     }
   }
 
+  // Função para buscar cotação manualmente (ao submeter o formulário)
   async function buscarCotacao(e) {
     e.preventDefault();
     buscarCotacaoAutomatica();
   }
 
+  // Função para calcular a conversão entre valores
   function calcularConversao(valor, taxa) {
     if (!taxa) return;
     const resultado = valor * taxa;
@@ -95,7 +98,8 @@ function App() {
       setValorDestino('');
     }
   }
-
+ 
+  // Função para lidar com mudança no valor de destino
   function handleValorDestinoChange(e) {
     const valor = e.target.value;
     setValorDestino(valor);
@@ -108,12 +112,14 @@ function App() {
     }
   }
 
+  // Função para formatar data ISO para formato legível
   function formatarData(isoString) {
     if (!isoString) return '';
     const d = new Date(isoString);
     return d.toLocaleString('pt-BR');
   }
 
+  // Função para buscar histórico de cotações
   async function buscarHistorico() {
     setLoadingHistorico(true);
     try {

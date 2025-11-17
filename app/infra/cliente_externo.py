@@ -15,6 +15,11 @@ class HttpFrankfurterProvider(CotacaoProvider):
         self._timeout = timeout
 
     async def buscar_cotacao(self, moeda_origem: str, moeda_destino: str) -> float:
+        """
+        Busca a cotação entre duas moedas na Frankfurter API.
+        Raises httpx.HTTPStatusError se a resposta for inválida.
+        Raises ValueError se a cotação não for encontrada na resposta.
+        """
         moeda_origem = moeda_origem.upper()
         moeda_destino = moeda_destino.upper()
 
