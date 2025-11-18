@@ -4,7 +4,7 @@ from typing import Literal
 
 from pydantic import BaseModel
 
-Moeda = Literal["USD", "EUR", "BRL", "JPY"]  # pode ampliar depois
+Moeda = Literal["USD", "EUR", "BRL", "JPY", "GBP", "AUD", "CAD", "CHF"]  # pode ampliar depois
 
 
 class Cotacao(BaseModel):
