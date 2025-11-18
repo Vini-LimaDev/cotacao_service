@@ -26,7 +26,6 @@ services:
   - type: web
     name: cotacao-frontend
     runtime: static
-    plan: free
     branch: main
     buildCommand: cd cotacao-frontend && npm install && npm run build
     staticPublishPath: cotacao-frontend/dist
