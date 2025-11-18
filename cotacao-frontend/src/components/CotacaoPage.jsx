@@ -1,31 +1,13 @@
-import { AuthProvider, useAuth } from './contexts/AuthContext';
-import AuthPage from './components/AuthPage';
-import CotacaoPage from './components/CotacaoPage';
+// src/components/CotacaoPage.jsx
+import { useState, useEffect } from 'react';
+import { useAuth } from '../contexts/AuthContext';
 
-function AppContent() {
-  const { isAuthenticated, loading } = useAuth();
+const MOEDAS = ['USD', 'EUR', 'BRL', 'JPY', 'GBP', 'AUD', 'CAD', 'CHF'];
 
-  if (loading) {
-    return (
-      <div className="loading-screen">
-        <div className="spinner"></div>
-        <p>Carregando...</p>
-      </div>
-    );
-  }
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:8888';
 
-  return isAuthenticated ? <CotacaoPage /> : <AuthPage />;
-}
-
-function App() {
-  return (
-    <AuthProvider>
-      <AppContent />
-    </AuthProvider>
-  );
-}
-
-function AppOld() {
+export default function CotacaoPage() {
+  const { user, logout } = useAuth();
   const [moedaOrigem, setMoedaOrigem] = useState('USD');
   const [moedaDestino, setMoedaDestino] = useState('BRL');
   const [cotacao, setCotacao] = useState(null);
@@ -94,7 +76,6 @@ function AppOld() {
       if (valorOrigem && !isNaN(parseFloat(valorOrigem))) {
         calcularConversao(parseFloat(valorOrigem), data.taxa_cambio);
       } else if (valorDestino && !isNaN(parseFloat(valorDestino))) {
-        // Recalcula também se houver valor no campo de destino
         const resultado = parseFloat(valorDestino) / data.taxa_cambio;
         setValorOrigem(resultado.toFixed(2));
       }
@@ -107,7 +88,7 @@ function AppOld() {
     }
   }
 
-  // Função para buscar cotação manualmente (ao submeter o formulário)
+  // Função para buscar cotação manualmente
   async function buscarCotacao(e) {
     e.preventDefault();
     buscarCotacaoAutomatica();
@@ -131,7 +112,6 @@ function AppOld() {
     }
   }
  
-  // Função para lidar com mudança no valor de destino
   function handleValorDestinoChange(e) {
     const valor = e.target.value;
     setValorDestino(valor);
@@ -144,7 +124,6 @@ function AppOld() {
     }
   }
 
-  // Função para formatar data ISO para formato legível
   function formatarData(isoString) {
     if (!isoString) return '';
     const d = new Date(isoString);
@@ -159,6 +138,18 @@ function AppOld() {
           background: `radial-gradient(600px at ${mousePosition.x}px ${mousePosition.y}px, rgba(34, 197, 94, 0.15), transparent 80%)`
         }}
       />
+
+      {/* Header com informações do usuário */}
+      <div className="user-header">
+        <div className="user-info">
+          <span className="user-email">{user?.email}</span>
+          {user?.full_name && <span className="user-name">{user.full_name}</span>}
+        </div>
+        <button className="btn-logout" onClick={logout}>
+          Sair
+        </button>
+      </div>
+
       <div className="card">
         <h1 className="title">Cotação de Moedas</h1>
         <p className="subtitle">
@@ -273,7 +264,6 @@ function AppOld() {
         )}
       </div>
 
-      {/* Notificação Toast */}
       {mostrarNotificacao && (
         <div className="toast-notification">
           <svg
@@ -294,5 +284,3 @@ function AppOld() {
     </div>
   );
 }
-
-export default App;

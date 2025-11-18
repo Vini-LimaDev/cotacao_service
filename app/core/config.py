@@ -18,6 +18,26 @@ class Settings(BaseSettings):
         description="Timeout em segundos para chamadas HTTP externas",
     )
 
+    # Database
+    database_url: str = Field(
+        default="postgresql://cotacao_user:cotacao_pass@localhost:5432/cotacao_db",
+        description="URL de conexão com o banco de dados PostgreSQL",
+    )
+
+    # Auth / JWT
+    secret_key: str = Field(
+        default="sua-chave-secreta-super-segura-mude-em-producao",
+        description="Chave secreta para geração de tokens JWT",
+    )
+    algorithm: str = Field(
+        default="HS256",
+        description="Algoritmo de criptografia para JWT",
+    )
+    access_token_expire_minutes: int = Field(
+        default=30,
+        description="Tempo de expiração do token de acesso em minutos",
+    )
+
     class Config:
         env_prefix = "COTACAO_"
 

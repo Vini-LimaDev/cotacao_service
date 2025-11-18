@@ -49,7 +49,6 @@ async def obter_cotacao(
     except HTTPException:
         raise
     except Exception as exc:
-        # aqui você pode logar o erro bonitinho
         raise HTTPException(status_code=502, detail=f"Erro ao consultar cotação externa: {exc}") from exc
 
     return cotacao

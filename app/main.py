@@ -1,13 +1,14 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api.cotacao_rotas import router as cotacao_router  # ou cotacao_routes
+from app.api.cotacao_rotas import router as cotacao_router
+from app.api.auth_rotas import router as auth_router
 
 # Inicializa a aplicação FastAPI
 app = FastAPI(
     title="Serviço de Cotação de Moedas",
-    description="Serviço com cache em memória usando Frankfurter API.",
-    version="0.2.0",
+    description="Serviço com autenticação JWT e cache em memória usando Frankfurter API.",
+    version="0.3.0",
 )
 
 # 🔹 CORS: libera o front do Vite (porta 5173)
@@ -23,6 +24,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Inclui as rotas de autenticação
+app.include_router(auth_router)
 
 # Inclui as rotas de cotação
 app.include_router(cotacao_router)
