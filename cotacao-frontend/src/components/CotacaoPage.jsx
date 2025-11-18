@@ -1,6 +1,7 @@
 // src/components/CotacaoPage.jsx
 import { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
+import CriptoPage from './CriptoPage';
 
 const MOEDAS = ['USD', 'EUR', 'BRL', 'JPY', 'GBP', 'AUD', 'CAD', 'CHF'];
 
@@ -8,6 +9,7 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:8888
 
 export default function CotacaoPage() {
   const { user, logout } = useAuth();
+  const [abaAtiva, setAbaAtiva] = useState('moedas'); // 'moedas' ou 'cripto'
   const [moedaOrigem, setMoedaOrigem] = useState('USD');
   const [moedaDestino, setMoedaDestino] = useState('BRL');
   const [cotacao, setCotacao] = useState(null);
@@ -150,7 +152,27 @@ export default function CotacaoPage() {
         </button>
       </div>
 
+      {/* Card único com tabs dentro */}
       <div className="card">
+        {/* Sistema de Tabs */}
+        <div className="tabs-container">
+          <button
+            className={`tab-button ${abaAtiva === 'moedas' ? 'active' : ''}`}
+            onClick={() => setAbaAtiva('moedas')}
+          >
+            💱 Moedas Fiat
+          </button>
+          <button
+            className={`tab-button ${abaAtiva === 'cripto' ? 'active' : ''}`}
+            onClick={() => setAbaAtiva('cripto')}
+          >
+            🪙 Criptomoedas
+          </button>
+        </div>
+
+        {/* Conteúdo da aba ativa */}
+        {abaAtiva === 'moedas' ? (
+          <div className="tab-content">
         <h1 className="title">Cotação de Moedas</h1>
         <p className="subtitle">
           Consumindo a API em <code>/cotacao</code> com cache em memória.
@@ -260,6 +282,12 @@ export default function CotacaoPage() {
                 </div>
               </div>
             </div>
+          </div>
+        )}
+        </div>
+        ) : (
+          <div className="tab-content">
+            <CriptoPage />
           </div>
         )}
       </div>

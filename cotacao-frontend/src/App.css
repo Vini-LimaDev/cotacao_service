@@ -180,6 +180,13 @@ body {
   color: #fecaca;
 }
 
+.erro-hint {
+  margin: 0.5rem 0 0 0;
+  font-size: 0.8rem;
+  color: #fca5a5;
+  line-height: 1.4;
+}
+
 .result-card {
   margin-top: 1.5rem;
   padding-top: 1rem;
@@ -218,6 +225,13 @@ body {
   background: rgba(147, 197, 253, 0.16);
   border: 1px solid rgba(129, 140, 248, 0.7);
   color: #c7d2fe;
+}
+
+.badge-api {
+  background: rgba(34, 197, 94, 0.16);
+  border: 1px solid rgba(34, 197, 94, 0.7);
+  color: #86efac;
+  font-weight: 600;
 }
 
 .conversion-section {
@@ -666,5 +680,209 @@ body {
   
   .auth-content {
     padding: 1.5rem;
+  }
+}
+
+/* ========== ESTILOS DE TABS ========== */
+
+.tabs-container {
+  display: flex;
+  gap: 0.5rem;
+  margin: -1.75rem -2rem 1.5rem -2rem;
+  padding: 1rem 1.5rem 0 1.5rem;
+  background: rgba(15, 23, 42, 0.8);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+  position: relative;
+}
+
+.tab-button {
+  flex: 1;
+  padding: 0.75rem 1.25rem;
+  background: transparent;
+  border: none;
+  color: #9ca3af;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 0.5rem 0.5rem 0 0;
+  position: relative;
+  border-bottom: 2px solid transparent;
+}
+
+.tab-button:hover {
+  color: #cbd5f5;
+  background: rgba(148, 163, 184, 0.05);
+}
+
+.tab-button.active {
+  color: #22c55e;
+  background: rgba(34, 197, 94, 0.1);
+  border-bottom-color: #22c55e;
+}
+
+.tab-content {
+  width: 100%;
+}
+
+/* ========== ESTILOS DE CRIPTO ========== */
+
+.cripto-container {
+  width: 100%;
+}
+
+.cripto-header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.auto-refresh-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+
+.refresh-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.875rem;
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  border-radius: 999px;
+  color: #22c55e;
+  font-size: 0.85rem;
+  font-weight: 600;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.refresh-badge svg {
+  animation: rotate 2s linear infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.cripto-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.cripto-card {
+  background: rgba(30, 41, 59, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.cripto-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(to right, #22c55e, #16a34a);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.cripto-card:hover {
+  border-color: rgba(34, 197, 94, 0.5);
+  background: rgba(30, 41, 59, 0.8);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(34, 197, 94, 0.15);
+}
+
+.cripto-card:hover::before {
+  opacity: 1;
+}
+
+.cripto-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.cripto-header h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #e5e7eb;
+}
+
+.cripto-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.taxa-destaque {
+  font-size: 1.2rem;
+  color: #22c55e !important;
+  font-weight: 700;
+}
+
+.data-atualizacao {
+  font-size: 0.8rem;
+  color: #9ca3af;
+}
+
+@media (max-width: 640px) {
+  .tabs-container {
+    margin: -1.75rem -2rem 1rem -2rem;
+    padding: 0.75rem 1rem 0 1rem;
+  }
+
+  .tab-button {
+    font-size: 0.85rem;
+    padding: 0.625rem 0.875rem;
+  }
+
+  .cripto-header-section {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .auto-refresh-info {
+    align-items: flex-start;
+  }
+
+  .cripto-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .cripto-card {
+    padding: 1.25rem;
   }
 }
