@@ -20,7 +20,7 @@ Se ainda não fez push do código:
 cd /home/vinicius_lima/api_cotacao/cotacao_service
 git add .
 git commit -m "Preparando para deploy no Render"
-git push origin version-oficial
+git push origin main
 ```
 
 ### 2. Criar Conta no Render
@@ -66,7 +66,7 @@ git push origin version-oficial
 3. Preencha:
    - **Name**: `cotacao-api`
    - **Region**: Oregon (US West)
-   - **Branch**: `version-oficial`
+   - **Branch**: `main`
    - **Root Directory**: `.` (raiz)
    - **Runtime**: Python 3
    - **Build Command**: `./build.sh`
@@ -94,7 +94,7 @@ git push origin version-oficial
 3. Preencha:
    - **Name**: `cotacao-frontend`
    - **Region**: Oregon (US West)
-   - **Branch**: `version-oficial`
+   - **Branch**: `main`
    - **Root Directory**: `cotacao-frontend`
    - **Build Command**: `npm install && npm run build`
    - **Publish Directory**: `dist`
