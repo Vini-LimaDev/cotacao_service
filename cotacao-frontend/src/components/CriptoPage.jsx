@@ -231,7 +231,13 @@ export default function CriptoPage() {
           {cotacoes.USDT && (
             <div className="cripto-card">
               <div className="cripto-header">
-                <h2>💵 USDT (Tether)</h2>
+                <h2>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" style={{verticalAlign: 'middle', marginRight: '8px'}}>
+                    <circle cx="12" cy="12" r="10" fill="#50AF95"/>
+                    <path d="M13.5 10.5V9h3V7.5h-9V9h3v1.5c-2.5.3-4.5 1.3-4.5 2.5s2 2.2 4.5 2.5V18h1.5v-2.5c2.5-.3 4.5-1.3 4.5-2.5s-2-2.2-4.5-2.5zm-3 3.8c-1.7-.2-3-.8-3-1.3s1.3-1.1 3-1.3v2.6zm3 0v-2.6c1.7.2 3 .8 3 1.3s-1.3 1.1-3 1.3z" fill="white"/>
+                  </svg>
+                  USDT (Tether)
+                </h2>
                 <span className="badge badge-api">
                   {cotacoes.USDT.fonte}
                 </span>
@@ -295,7 +301,14 @@ export default function CriptoPage() {
           {cotacoes.USDC && (
             <div className="cripto-card">
               <div className="cripto-header">
-                <h2>💰 USDC (USD Coin)</h2>
+                <h2>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" style={{verticalAlign: 'middle', marginRight: '8px'}}>
+                    <circle cx="12" cy="12" r="10" fill="#2775CA"/>
+                    <path d="M15.5 12c0-1.93-1.57-3.5-3.5-3.5S8.5 10.07 8.5 12s1.57 3.5 3.5 3.5 3.5-1.57 3.5-3.5zm-5.25 0c0-.97.78-1.75 1.75-1.75s1.75.78 1.75 1.75-.78 1.75-1.75 1.75-1.75-.78-1.75-1.75z" fill="white"/>
+                    <path d="M12 6.5c-.55 0-1 .45-1 1v.75c-1.24.26-2.25 1.24-2.25 2.5h1.5c0-.69.56-1.25 1.25-1.25h1c.69 0 1.25.56 1.25 1.25 0 .55-.36 1.03-.87 1.19l-2 .63c-.95.3-1.63 1.16-1.63 2.18 0 1.26 1.01 2.24 2.25 2.5v.75c0 .55.45 1 1 1s1-.45 1-1v-.75c1.24-.26 2.25-1.24 2.25-2.5h-1.5c0 .69-.56 1.25-1.25 1.25h-1c-.69 0-1.25-.56-1.25-1.25 0-.55.36-1.03.87-1.19l2-.63c.95-.3 1.63-1.16 1.63-2.18 0-1.26-1.01-2.24-2.25-2.5V7.5c0-.55-.45-1-1-1z" fill="white"/>
+                  </svg>
+                  USDC (USD Coin)
+                </h2>
                 <span className="badge badge-api">
                   {cotacoes.USDC.fonte}
                 </span>
