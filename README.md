@@ -105,6 +105,9 @@ uvicorn app.main:app --port 9876 --reload
 # Navegar para a pasta do frontend
 cd cotacao-frontend
 
+# Abre o ambiente virtual
+source .venv/bin/activate
+
 # Instalar dependências
 npm install
 
