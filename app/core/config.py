@@ -18,6 +18,16 @@ class Settings(BaseSettings):
         description="Timeout em segundos para chamadas HTTP externas",
     )
 
+    # Crypto Provider
+    crypto_provider: str = Field(
+        default="binance",
+        description="Provider de cotações cripto: 'binance', 'coingecko' ou 'brasilbitcoin'",
+    )
+    crypto_api_timeout: float = Field(
+        default=10.0,
+        description="Timeout para requisições de cripto em segundos",
+    )
+
     # Database
     database_url: str = Field(
         default="postgresql://cotacao_user:cotacao_pass@localhost:5432/cotacao_db",

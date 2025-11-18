@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.cotacao_rotas import router as cotacao_router
 from app.api.auth_rotas import router as auth_router
+from app.api.cripto_rotas import router as cripto_router
 
 # Inicializa a aplicação FastAPI
 app = FastAPI(
@@ -30,6 +31,9 @@ app.include_router(auth_router)
 
 # Inclui as rotas de cotação
 app.include_router(cotacao_router)
+
+# Inclui as rotas de criptomoedas
+app.include_router(cripto_router)
 
 
 @app.get("/health")
