@@ -63,9 +63,25 @@ export default function CotacaoPage() {
       });
 
       const resp = await fetch(`${API_BASE_URL}/cotacao?${params.toString()}`);
+      
       if (!resp.ok) {
-        const body = await resp.json().catch(() => ({}));
-        throw new Error(body.detail || 'Erro ao buscar cotação');
+        let mensagemErro = 'Erro ao buscar cotação';
+        
+        try {
+          const body = await resp.json();
+          mensagemErro = body.detail || mensagemErro;
+        } catch {
+          // Se não conseguir parsear JSON, usa mensagem genérica baseada no status
+          if (resp.status === 502) {
+            mensagemErro = 'Erro ao consultar API externa. Tente novamente.';
+          } else if (resp.status === 400) {
+            mensagemErro = 'Moeda inválida. Use códigos de 3 letras (ex: USD, EUR, BRL).';
+          } else {
+            mensagemErro = `Erro ${resp.status}: ${resp.statusText}`;
+          }
+        }
+        
+        throw new Error(mensagemErro);
       }
 
       const data = await resp.json();
@@ -82,9 +98,11 @@ export default function CotacaoPage() {
         setValorOrigem(resultado.toFixed(2));
       }
     } catch (err) {
-      console.error(err);
+      console.error('Erro ao buscar cotação:', err);
       setErro(err.message || 'Erro inesperado');
       setCotacao(null);
+      setValorOrigem('');
+      setValorDestino('');
     } finally {
       setLoading(false);
     }
@@ -227,6 +245,12 @@ export default function CotacaoPage() {
         {erro && (
           <div className="alert alert-error">
             <strong>Erro:</strong> {erro}
+            {erro.includes('API externa') && (
+              <p className="erro-hint">
+                A API de cotações pode estar temporariamente indisponível. 
+                Por favor, tente novamente em alguns instantes.
+              </p>
+            )}
           </div>
         )}
 

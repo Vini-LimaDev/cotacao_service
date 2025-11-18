@@ -14,7 +14,7 @@ class Settings(BaseSettings):
         description="Base URL da Frankfurter API",
     )
     frankfurter_timeout_seconds: float = Field(
-        default=5.0,
+        default=15.0,
         description="Timeout em segundos para chamadas HTTP externas",
     )
 
