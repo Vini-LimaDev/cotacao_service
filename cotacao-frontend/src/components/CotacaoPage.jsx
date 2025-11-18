@@ -1,6 +1,7 @@
 // src/components/CotacaoPage.jsx
 import { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
+import CriptoPage from './CriptoPage';
 
 const MOEDAS = ['USD', 'EUR', 'BRL', 'JPY', 'GBP', 'AUD', 'CAD', 'CHF'];
 
@@ -8,6 +9,7 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:8888
 
 export default function CotacaoPage() {
   const { user, logout } = useAuth();
+  const [abaAtiva, setAbaAtiva] = useState('moedas'); // 'moedas' ou 'cripto'
   const [moedaOrigem, setMoedaOrigem] = useState('USD');
   const [moedaDestino, setMoedaDestino] = useState('BRL');
   const [cotacao, setCotacao] = useState(null);
@@ -61,9 +63,25 @@ export default function CotacaoPage() {
       });
 
       const resp = await fetch(`${API_BASE_URL}/cotacao?${params.toString()}`);
+      
       if (!resp.ok) {
-        const body = await resp.json().catch(() => ({}));
-        throw new Error(body.detail || 'Erro ao buscar cotação');
+        let mensagemErro = 'Erro ao buscar cotação';
+        
+        try {
+          const body = await resp.json();
+          mensagemErro = body.detail || mensagemErro;
+        } catch {
+          // Se não conseguir parsear JSON, usa mensagem genérica baseada no status
+          if (resp.status === 502) {
+            mensagemErro = 'Erro ao consultar API externa. Tente novamente.';
+          } else if (resp.status === 400) {
+            mensagemErro = 'Moeda inválida. Use códigos de 3 letras (ex: USD, EUR, BRL).';
+          } else {
+            mensagemErro = `Erro ${resp.status}: ${resp.statusText}`;
+          }
+        }
+        
+        throw new Error(mensagemErro);
       }
 
       const data = await resp.json();
@@ -80,9 +98,11 @@ export default function CotacaoPage() {
         setValorOrigem(resultado.toFixed(2));
       }
     } catch (err) {
-      console.error(err);
+      console.error('Erro ao buscar cotação:', err);
       setErro(err.message || 'Erro inesperado');
       setCotacao(null);
+      setValorOrigem('');
+      setValorDestino('');
     } finally {
       setLoading(false);
     }
@@ -150,7 +170,26 @@ export default function CotacaoPage() {
         </button>
       </div>
 
-      <div className="card">
+      {/* Card único com tabs dentro */}
+      <div className={`card ${abaAtiva === 'cripto' ? 'card-wide' : ''}`}>
+        {/* Sistema de Tabs */}
+        <div className="tabs-container">
+          <button
+            className={`tab-button ${abaAtiva === 'moedas' ? 'active' : ''}`}
+            onClick={() => setAbaAtiva('moedas')}
+          >
+            💱 Moedas Fiat
+          </button>
+          <button
+            className={`tab-button ${abaAtiva === 'cripto' ? 'active' : ''}`}
+            onClick={() => setAbaAtiva('cripto')}
+          >
+            🪙 Criptomoedas
+          </button>
+        </div>
+
+        {/* Conteúdo das abas - renderiza ambas mas mostra apenas a ativa */}
+        <div className={`tab-content ${abaAtiva === 'moedas' ? '' : 'tab-hidden'}`}>
         <h1 className="title">Cotação de Moedas</h1>
         <p className="subtitle">
           Consumindo a API em <code>/cotacao</code> com cache em memória.
@@ -206,6 +245,12 @@ export default function CotacaoPage() {
         {erro && (
           <div className="alert alert-error">
             <strong>Erro:</strong> {erro}
+            {erro.includes('API externa') && (
+              <p className="erro-hint">
+                A API de cotações pode estar temporariamente indisponível. 
+                Por favor, tente novamente em alguns instantes.
+              </p>
+            )}
           </div>
         )}
 
@@ -262,6 +307,11 @@ export default function CotacaoPage() {
             </div>
           </div>
         )}
+        </div>
+        
+        <div className={`tab-content ${abaAtiva === 'cripto' ? '' : 'tab-hidden'}`}>
+          <CriptoPage />
+        </div>
       </div>
 
       {mostrarNotificacao && (
