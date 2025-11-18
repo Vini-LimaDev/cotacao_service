@@ -5,8 +5,8 @@ services:
     runtime: python
     region: oregon
     plan: free
-    branch: version-oficial
-    buildCommand: pip install -r requirements.txt
+    branch: main
+    buildCommand: ./build.sh
     startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
     envVars:
       - key: COTACAO_DATABASE_URL
@@ -26,9 +26,8 @@ services:
   - type: web
     name: cotacao-frontend
     runtime: static
-    region: oregon
     plan: free
-    branch: version-oficial
+    branch: main
     buildCommand: cd cotacao-frontend && npm install && npm run build
     staticPublishPath: cotacao-frontend/dist
     envVars:
