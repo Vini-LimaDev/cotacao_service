@@ -40,6 +40,17 @@ body {
   border: 1px solid rgba(148, 163, 184, 0.2);
   position: relative;
   z-index: 1;
+  transition: max-width 0.3s ease;
+}
+
+.card.card-wide {
+  max-width: 1200px;
+}
+
+@media (max-width: 768px) {
+  .card.card-wide {
+    max-width: 520px;
+  }
 }
 
 .title {
@@ -63,12 +74,14 @@ body {
 .field-row {
   display: flex;
   gap: 0.75rem;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  align-items: center;
+  width: 100%;
 }
 
 .field {
   flex: 1;
-  min-width: 150px;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
@@ -101,6 +114,8 @@ body {
   background: #020617;
   color: #e5e7eb;
   font-size: 0.95rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .field input:focus {
@@ -723,12 +738,30 @@ body {
 
 .tab-content {
   width: 100%;
+  animation: fadeIn 0.3s ease-in;
+}
+
+.tab-content.tab-hidden {
+  display: none;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* ========== ESTILOS DE CRIPTO ========== */
 
 .cripto-container {
   width: 100%;
+  padding: 0;
+  margin: 0;
 }
 
 .cripto-header-section {
@@ -785,31 +818,37 @@ body {
 
 .cripto-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
   margin-top: 1.5rem;
+  width: 100%;
+  align-items: start;
+}
+
+@media (min-width: 768px) {
+  .cripto-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 767px) {
+  .cripto-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
 }
 
 .cripto-card {
   background: rgba(30, 41, 59, 0.6);
   border: 1px solid rgba(148, 163, 184, 0.3);
   border-radius: 1rem;
-  padding: 1.5rem;
+  padding: 1.25rem 1.25rem 1.5rem 1.25rem;
   transition: all 0.3s ease;
   position: relative;
-  overflow: hidden;
-}
-
-.cripto-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(to right, #22c55e, #16a34a);
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  min-height: fit-content;
 }
 
 .cripto-card:hover {
@@ -817,10 +856,6 @@ body {
   background: rgba(30, 41, 59, 0.8);
   transform: translateY(-2px);
   box-shadow: 0 12px 28px rgba(34, 197, 94, 0.15);
-}
-
-.cripto-card:hover::before {
-  opacity: 1;
 }
 
 .cripto-header {
@@ -842,8 +877,48 @@ body {
 .cripto-info {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  margin-bottom: 1.5rem;
+  gap: 0.6rem;
+  margin: 1rem 0;
+}
+
+.conversion-section {
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(148, 163, 184, 0.3);
+  width: 100%;
+}
+
+.conversion-section h3 {
+  margin: 0 0 0.75rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #cbd5f5;
+}
+
+.conversion-section .field-row {
+  gap: 0.5rem;
+  align-items: flex-start;
+}
+
+.conversion-section .field {
+  flex: 1;
+  min-width: 0;
+}
+
+.conversion-section .conversion-arrow {
+  flex-shrink: 0;
+  width: auto;
+  margin: 0 0.25rem;
+}
+
+.conversion-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: #22c55e;
+  padding-top: 1.2rem;
+  flex-shrink: 0;
 }
 
 .taxa-destaque {
@@ -884,5 +959,14 @@ body {
 
   .cripto-card {
     padding: 1.25rem;
+  }
+
+  .field-row {
+    flex-wrap: wrap;
+  }
+
+  .conversion-arrow {
+    transform: rotate(90deg);
+    padding: 0.5rem 0;
   }
 }

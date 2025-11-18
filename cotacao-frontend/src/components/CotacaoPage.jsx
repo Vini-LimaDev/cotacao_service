@@ -153,7 +153,7 @@ export default function CotacaoPage() {
       </div>
 
       {/* Card único com tabs dentro */}
-      <div className="card">
+      <div className={`card ${abaAtiva === 'cripto' ? 'card-wide' : ''}`}>
         {/* Sistema de Tabs */}
         <div className="tabs-container">
           <button
@@ -170,9 +170,8 @@ export default function CotacaoPage() {
           </button>
         </div>
 
-        {/* Conteúdo da aba ativa */}
-        {abaAtiva === 'moedas' ? (
-          <div className="tab-content">
+        {/* Conteúdo das abas - renderiza ambas mas mostra apenas a ativa */}
+        <div className={`tab-content ${abaAtiva === 'moedas' ? '' : 'tab-hidden'}`}>
         <h1 className="title">Cotação de Moedas</h1>
         <p className="subtitle">
           Consumindo a API em <code>/cotacao</code> com cache em memória.
@@ -285,11 +284,10 @@ export default function CotacaoPage() {
           </div>
         )}
         </div>
-        ) : (
-          <div className="tab-content">
-            <CriptoPage />
-          </div>
-        )}
+        
+        <div className={`tab-content ${abaAtiva === 'cripto' ? '' : 'tab-hidden'}`}>
+          <CriptoPage />
+        </div>
       </div>
 
       {mostrarNotificacao && (
