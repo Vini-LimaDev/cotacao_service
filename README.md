@@ -99,8 +99,8 @@ pip install -r requirements.txt
 source .venv/bin/activate
 
 
-# Executar o servidor (porta 9876)
-uvicorn app.main:app --port 9876 --reload
+# Executar o servidor (porta 8888)
+uvicorn app.main:app --port 8888 --reload
 ```
 
 ### Frontend
