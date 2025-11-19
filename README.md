@@ -94,8 +94,12 @@ O projeto segue uma **arquitetura hexagonal (ports and adapters)** no backend:
 cd cotacao_service
 pip install -r requirements.txt
 
-# Executar o servidor (porta 9876)
 
+# Abre o ambiente virtual
+source .venv/bin/activate
+
+
+# Executar o servidor (porta 9876)
 uvicorn app.main:app --port 9876 --reload
 ```
 
@@ -104,9 +108,6 @@ uvicorn app.main:app --port 9876 --reload
 ```bash
 # Navegar para a pasta do frontend
 cd cotacao-frontend
-
-# Abre o ambiente virtual
-source .venv/bin/activate
 
 # Instalar dependências
 npm install
