@@ -21,6 +21,8 @@ services:
         value: coingecko
       - key: PYTHON_VERSION
         value: 3.11.0
+      - key: FRONTEND_URL
+        value: https://cotacao-frontend-rgst.onrender.com
 
   # Frontend (React + Vite)
   - type: web
